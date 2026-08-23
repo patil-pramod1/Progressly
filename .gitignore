@@ -1,0 +1,27 @@
+# Java / Maven
+backend/target/
+*.class
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.tsbuildinfo
+.progressly-local/
+
+# Environment files
+.env
+.env.*
+!.env.example
+frontend/.env.local
+frontend/.env.production
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
