@@ -135,6 +135,12 @@ if (-not (Test-Path (Join-Path $frontendRoot 'node_modules'))) {
     try { npm.cmd install } finally { Pop-Location }
 }
 
+if (-not $SkipBuild) {
+    Write-Host 'Building frontend...' -ForegroundColor Cyan
+    Push-Location $frontendRoot
+    try { npm.cmd run build } finally { Pop-Location }
+}
+
 $frontendEntry = Start-LocalProcess 'frontend' $frontendRoot (Get-Command npm.cmd).Source @('run', 'dev', '--', '--host', 'localhost')
 $frontendEntry.port = 5173
 $frontendEntry.url = 'http://localhost:5173'

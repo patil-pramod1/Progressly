@@ -9,4 +9,4 @@ spring:
 eureka: { client: { service-url: { defaultZone: http://localhost:8761/eureka/ } } }
 management: { endpoints: { web: { exposure: { include: health,info,metrics,prometheus } } } }
 springdoc: { api-docs: { path: /v3/api-docs }, swagger-ui: { path: /swagger-ui.html } }
-progressly: { security: { jwt-secret: ${JWT_SECRET:replace-with-a-development-secret-at-least-32-characters} } }
+progressly: { security: { jwt-secret: '${JWT_SECRET:replace-with-a-development-secret-at-least-32-characters}' } }

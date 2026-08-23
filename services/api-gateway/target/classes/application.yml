@@ -5,6 +5,35 @@ spring:
     gateway:
       discovery:
         locator: { enabled: true, lower-case-service-id: true }
+      routes:
+        - id: identity-service
+          uri: lb://identity-service
+          predicates: [ Path=/api/v1/auth/** ]
+        - id: goal-service
+          uri: lb://goal-service
+          predicates: [ Path=/api/v1/goals/** ]
+        - id: activity-service
+          uri: lb://activity-service
+          predicates: [ Path=/api/v1/tasks/** ]
+        - id: habit-service
+          uri: lb://activity-service
+          predicates: [ Path=/api/v1/habits/** ]
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - http://localhost:5173
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - '*'
+            allowCredentials: false
 eureka: { client: { service-url: { defaultZone: http://localhost:8761/eureka/ } } }
 management: { endpoints: { web: { exposure: { include: health,info,metrics,prometheus } } } }
 springdoc: { api-docs: { path: /v3/api-docs }, swagger-ui: { path: /swagger-ui.html } }
