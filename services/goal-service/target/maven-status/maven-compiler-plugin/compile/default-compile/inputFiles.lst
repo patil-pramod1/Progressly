@@ -1,6 +1,7 @@
 C:\git repo\Progresly\services\goal-service\src\main\java\com\progressly\goal\api\GoalController.java
 C:\git repo\Progresly\services\goal-service\src\main\java\com\progressly\goal\api\GoalDtos.java
 C:\git repo\Progresly\services\goal-service\src\main\java\com\progressly\goal\api\GoalService.java
+C:\git repo\Progresly\services\goal-service\src\main\java\com\progressly\goal\common\ApiExceptionHandler.java
 C:\git repo\Progresly\services\goal-service\src\main\java\com\progressly\goal\domain\Goal.java
 C:\git repo\Progresly\services\goal-service\src\main\java\com\progressly\goal\domain\GoalRepository.java
 C:\git repo\Progresly\services\goal-service\src\main\java\com\progressly\goal\domain\Milestone.java

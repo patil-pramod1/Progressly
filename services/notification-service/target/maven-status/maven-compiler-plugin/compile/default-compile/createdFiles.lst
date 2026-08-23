@@ -1,2 +1,4 @@
 com\progressly\notification\NotificationHealthController.class
+com\progressly\notification\common\ApiExceptionHandler$ErrorResponse.class
 com\progressly\notification\NotificationApplication.class
+com\progressly\notification\common\ApiExceptionHandler.class

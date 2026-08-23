@@ -1,8 +1,16 @@
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\ActivityApplication.java
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\ActivityHealthController.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\api\HabitController.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\api\HabitDtos.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\api\HabitService.java
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\api\TaskController.java
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\api\TaskDtos.java
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\api\TaskService.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\common\ApiExceptionHandler.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\domain\Habit.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\domain\HabitLog.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\domain\HabitLogRepository.java
+C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\domain\HabitRepository.java
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\domain\Task.java
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\domain\TaskRepository.java
 C:\git repo\Progresly\services\activity-service\src\main\java\com\progressly\activity\security\JwtSecurity.java

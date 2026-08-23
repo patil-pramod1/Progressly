@@ -1,2 +1,4 @@
-com\progressly\reporting\ReportingApplication.class
+com\progressly\reporting\common\ApiExceptionHandler$ErrorResponse.class
 com\progressly\reporting\ReportingHealthController.class
+com\progressly\reporting\common\ApiExceptionHandler.class
+com\progressly\reporting\ReportingApplication.class

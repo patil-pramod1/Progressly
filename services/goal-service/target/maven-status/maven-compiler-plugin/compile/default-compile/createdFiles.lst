@@ -1,9 +1,11 @@
+com\progressly\goal\common\ApiExceptionHandler.class
 com\progressly\goal\api\GoalDtos$MilestoneRequest.class
 com\progressly\goal\domain\Goal$Status.class
 com\progressly\goal\domain\Goal$TrackingType.class
 com\progressly\goal\domain\Milestone.class
 com\progressly\goal\api\GoalController.class
 com\progressly\goal\GoalApplication.class
+com\progressly\goal\common\ApiExceptionHandler$ErrorResponse.class
 com\progressly\goal\domain\MilestoneRepository.class
 com\progressly\goal\api\GoalDtos$MilestoneResponse.class
 com\progressly\goal\api\GoalDtos$ProgressRequest.class

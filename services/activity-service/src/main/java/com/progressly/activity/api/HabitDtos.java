@@ -1,0 +1,3 @@
+package com.progressly.activity.api; import com.progressly.activity.domain.Habit; import jakarta.validation.constraints.*; import java.math.BigDecimal; import java.time.*; import java.util.UUID;
+public final class HabitDtos{private HabitDtos(){} public record Request(@NotBlank @Size(max=180)String name,@Size(max=2000)String description,@NotNull Habit.Frequency frequency,@DecimalMin("0")BigDecimal targetValue){} public record LogRequest(boolean completed,@DecimalMin("0")BigDecimal value,LocalDate date){} public record Response(UUID id,String name,String description,Habit.Frequency frequency,BigDecimal targetValue,boolean active,Instant createdAt){} public record LogResponse(UUID id,UUID habitId,LocalDate date,boolean completed,BigDecimal value){}
+}

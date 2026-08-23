@@ -27,8 +27,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtSecurity {
     @Bean SecurityFilterChain filterChain(HttpSecurity http, JwtFilter filter) throws Exception {
         return http.csrf(c -> c.disable()).sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(e -> e.authenticationEntryPoint((request, response, ex) -> write(response, 401, "AUTHENTICATION_REQUIRED", "Authentication is required"))
+                        .accessDeniedHandler((request, response, ex) -> write(response, 403, "ACCESS_DENIED", "You do not have permission for this resource")))
                 .authorizeHttpRequests(a -> a.requestMatchers("/api/v1/health", "/actuator/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll().anyRequest().authenticated())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).build();
+    }
+
+    private static void write(HttpServletResponse response, int status, String error, String message) throws java.io.IOException {
+        response.setStatus(status); response.setContentType("application/json");
+        response.getWriter().write("{\"status\":" + status + ",\"error\":\"" + error + "\",\"message\":\"" + message + "\"}");
     }
 }
 

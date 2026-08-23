@@ -1,0 +1,1 @@
+package com.progressly.activity.domain; import java.util.*; import org.springframework.data.jpa.repository.JpaRepository; public interface HabitRepository extends JpaRepository<Habit,UUID>{List<Habit> findByUserIdAndActiveTrueOrderByCreatedAtDesc(UUID userId);Optional<Habit> findByIdAndUserId(UUID id,UUID userId);}
