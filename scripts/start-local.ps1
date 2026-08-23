@@ -21,9 +21,21 @@ function Require-Command([string]$Name, [string]$InstallHint) {
 function Start-LocalProcess([string]$Name, [string]$WorkingDirectory, [string]$FilePath, [string[]]$Arguments) {
     $stdout = Join-Path $logRoot "$Name.out.log"
     $stderr = Join-Path $logRoot "$Name.err.log"
-    $argumentList = @('-NoLogo', '-NoProfile', '-Command', "Set-Location -LiteralPath '$WorkingDirectory'; & '$FilePath' $($Arguments -join ' ')")
-    $process = Start-Process -FilePath 'powershell.exe' -ArgumentList $argumentList -WorkingDirectory $WorkingDirectory -WindowStyle Hidden -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
-    return [pscustomobject]@{ name = $Name; pid = $process.Id; port = $null; log = $stdout }
+    Remove-Item -LiteralPath $stdout, $stderr -Force -ErrorAction SilentlyContinue
+    $process = Start-Process -FilePath $FilePath -ArgumentList $Arguments -WorkingDirectory $WorkingDirectory -WindowStyle Hidden -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+    return [pscustomobject]@{ name = $Name; pid = $process.Id; port = $null; url = $null; log = $stdout }
+}
+
+function Stop-TrackedProcesses {
+    if (-not (Test-Path -LiteralPath $processFile)) { return }
+    try { $tracked = Get-Content -LiteralPath $processFile -Raw | ConvertFrom-Json } catch { $tracked = @() }
+    foreach ($entry in @($tracked)) {
+        if (Get-Process -Id $entry.pid -ErrorAction SilentlyContinue) {
+            & taskkill.exe /PID $entry.pid /T /F 2>$null | Out-Null
+            Write-Host "Stopped stale $($entry.name) (PID $($entry.pid))" -ForegroundColor DarkGray
+        }
+    }
+    Remove-Item -LiteralPath $processFile -Force -ErrorAction SilentlyContinue
 }
 
 function Test-Port([int]$Port) {
@@ -51,6 +63,7 @@ if (-not (Get-Command "$containerCli-compose" -ErrorAction SilentlyContinue)) {
 }
 
 if ($containerCli -eq 'podman') {
+    $env:PROMETHEUS_HOST = 'host.containers.internal'
     Write-Host 'Checking Podman machine...' -ForegroundColor Cyan
     $machineName = 'podman-machine-default'
     $machineState = $null
@@ -74,9 +87,12 @@ if ($containerCli -eq 'podman') {
     & podman info | Out-Null
     if ($LASTEXITCODE -ne 0) { throw 'Podman is installed, but the Podman machine is not reachable.' }
     Write-Host 'Podman machine is ready.' -ForegroundColor Green
+} else {
+    $env:PROMETHEUS_HOST = 'host.docker.internal'
 }
 
 New-Item -ItemType Directory -Path $logRoot -Force | Out-Null
+Stop-TrackedProcesses
 if (-not (Test-Path (Join-Path $projectRoot '.env'))) {
     Copy-Item (Join-Path $projectRoot '.env.example') (Join-Path $projectRoot '.env')
     Write-Host 'Created .env from .env.example' -ForegroundColor Yellow
@@ -95,19 +111,20 @@ if (-not $SkipBuild) {
 $processes = @()
 $mvn = (Get-Command mvn).Source
 $serviceDefinitions = @(
-    @{ Name = 'service-discovery'; Directory = 'service-discovery'; Port = 8761 },
-    @{ Name = 'api-gateway'; Directory = 'api-gateway'; Port = 8080 },
-    @{ Name = 'identity-service'; Directory = 'identity-service'; Port = 8081 },
-    @{ Name = 'goal-service'; Directory = 'goal-service'; Port = 8082 },
-    @{ Name = 'activity-service'; Directory = 'activity-service'; Port = 8083 },
-    @{ Name = 'reporting-service'; Directory = 'reporting-service'; Port = 8084 },
-    @{ Name = 'notification-service'; Directory = 'notification-service'; Port = 8085 }
+    @{ Name = 'service-discovery'; Directory = 'service-discovery'; Port = 8761; Url = 'http://localhost:8761/api/v1/health' },
+    @{ Name = 'api-gateway'; Directory = 'api-gateway'; Port = 8080; Url = 'http://localhost:8080/api/v1/health' },
+    @{ Name = 'identity-service'; Directory = 'identity-service'; Port = 8081; Url = 'http://localhost:8081/api/v1/health' },
+    @{ Name = 'goal-service'; Directory = 'goal-service'; Port = 8082; Url = 'http://localhost:8082/api/v1/health' },
+    @{ Name = 'activity-service'; Directory = 'activity-service'; Port = 8083; Url = 'http://localhost:8083/api/v1/health' },
+    @{ Name = 'reporting-service'; Directory = 'reporting-service'; Port = 8084; Url = 'http://localhost:8084/api/v1/health' },
+    @{ Name = 'notification-service'; Directory = 'notification-service'; Port = 8085; Url = 'http://localhost:8085/api/v1/health' }
 )
 
 foreach ($definition in $serviceDefinitions) {
     $directory = Join-Path $servicesRoot $definition.Directory
     $entry = Start-LocalProcess $definition.Name $directory $mvn @('spring-boot:run')
     $entry.port = $definition.Port
+    $entry.url = $definition.Url
     $processes += $entry
     Write-Host "Started $($definition.Name) (PID $($entry.pid))" -ForegroundColor DarkGray
 }
@@ -120,6 +137,7 @@ if (-not (Test-Path (Join-Path $frontendRoot 'node_modules'))) {
 
 $frontendEntry = Start-LocalProcess 'frontend' $frontendRoot (Get-Command npm.cmd).Source @('run', 'dev', '--', '--host', 'localhost')
 $frontendEntry.port = 5173
+$frontendEntry.url = 'http://localhost:5173'
 $processes += $frontendEntry
 $processes | ConvertTo-Json | Set-Content -Path $processFile
 
@@ -127,17 +145,18 @@ Write-Host "`nWaiting for application processes (up to $TimeoutSeconds seconds).
 $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
 do {
     Start-Sleep -Seconds 2
-    $ready = @($processes | Where-Object { Test-Port $_.port }).Count -eq $processes.Count
+    $ready = @($processes | Where-Object { (Test-Port $_.port) -and (Test-Url $_.url) }).Count -eq $processes.Count
 } while (-not $ready -and (Get-Date) -lt $deadline)
 
 Write-Host "`nProgressly local status" -ForegroundColor White
 Write-Host ('-' * 72)
 foreach ($entry in $processes) {
-    $isReady = Test-Port $entry.port
+    $isReady = (Test-Port $entry.port) -and (Test-Url $entry.url)
     $label = if ($isReady) { 'RUNNING' } else { 'NOT READY' }
     $color = if ($isReady) { 'Green' } else { 'Red' }
     Write-Host ("{0,-22} {1,-10} http://localhost:{2}  PID {3}" -f $entry.name, $label, $entry.port, $entry.pid) -ForegroundColor $color
 }
 Write-Host ("{0,-22} {1,-10} http://localhost:8025" -f 'mailpit', $(if (Test-Port 8025) { 'RUNNING' } else { 'NOT READY' }))
+Write-Host ("{0,-22} {1,-10} http://localhost:9090" -f 'prometheus', $(if (Test-Port 9090) { 'RUNNING' } else { 'NOT READY' }))
 Write-Host "`nLogs: $logRoot"
 Write-Host 'Stop everything with: .\scripts\stop-local.ps1'

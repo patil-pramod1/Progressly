@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: progressly-services
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+          - ${PROMETHEUS_HOST:-host.docker.internal}:8761
+          - ${PROMETHEUS_HOST:-host.docker.internal}:8080
+          - ${PROMETHEUS_HOST:-host.docker.internal}:8081
+          - ${PROMETHEUS_HOST:-host.docker.internal}:8082
+          - ${PROMETHEUS_HOST:-host.docker.internal}:8083
+          - ${PROMETHEUS_HOST:-host.docker.internal}:8084
+          - ${PROMETHEUS_HOST:-host.docker.internal}:8085
+

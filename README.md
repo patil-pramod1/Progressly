@@ -1,6 +1,6 @@
 # Progressly
 
-Progressly is a multi-user personal progress platform for custom goals, daily activities, habits, measurable progress, reports, and insights. It is being built as a set of independently deployable Spring Boot microservices behind an API gateway.
+Progressly is a multi-user personal progress platform for custom goals, daily activities, habits, measurable progress, reports, and insights. It is being built as a set of independently deployable Spring Boot microservices behind an API gateway. Authentication, goals, milestones, and task APIs are now implemented; remaining product modules and frontend workflows are still in progress.
 
 > Current status: Phase 1 — microservices project initialization. Infrastructure and the frontend shell are in place; business services are being scaffolded next.
 
@@ -131,7 +131,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`. The gateway runs on `http://localhost:8080`, Eureka is at `http://localhost:8761`, and Mailpit is at `http://localhost:8025`. Domain services are started independently from their service directories.
+Open `http://localhost:5173`. The gateway runs on `http://localhost:8080`, Eureka is at `http://localhost:8761`, Prometheus is at `http://localhost:9090`, and Mailpit is at `http://localhost:8025`. Each Spring service exposes Swagger UI at `http://localhost:<port>/swagger-ui.html` and Prometheus metrics at `http://localhost:<port>/actuator/prometheus`.
 
 Windows users can use `mvn spring-boot:run` from each service directory. A Maven Wrapper will be added at the services root once the local Java toolchain is installed.
 
@@ -168,14 +168,14 @@ npm test
 npm run build
 ```
 
-## API documentation
+## API documentation and metrics
 
-The API is versioned under `/api/v1`. OpenAPI/Swagger will be added with the authentication phase. The Phase 1 smoke endpoint is `GET /api/v1/health`.
+The API is versioned under `/api/v1`. Swagger UI and OpenAPI JSON are available on each service at `/swagger-ui.html` and `/v3/api-docs`. Actuator exposes Prometheus-format metrics at `/actuator/prometheus`, and the local Prometheus server scrapes all service ports every 15 seconds.
 
 ## Delivery roadmap
 
 1. Project initialization — current phase
-2. Authentication, JWT refresh tokens, roles, and ownership checks
+2. Authentication, JWT refresh tokens, roles, and ownership checks (authentication slice in progress)
 3. Goals, milestones, tasks, habits, and progress
 4. Dashboard, calendar, analytics, streaks, and achievements
 5. Reminders, scheduler, email, and weekly reports

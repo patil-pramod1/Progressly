@@ -1,0 +1,14 @@
+com\progressly\activity\security\JwtSecurity.class
+com\progressly\activity\api\TaskDtos$StatusRequest.class
+com\progressly\activity\api\TaskService.class
+com\progressly\activity\api\TaskController.class
+com\progressly\activity\api\TaskDtos$Request.class
+com\progressly\activity\ActivityHealthController.class
+com\progressly\activity\ActivityApplication.class
+com\progressly\activity\api\TaskDtos.class
+com\progressly\activity\domain\Task$Status.class
+com\progressly\activity\domain\Task$Recurrence.class
+com\progressly\activity\security\JwtFilter.class
+com\progressly\activity\api\TaskDtos$Response.class
+com\progressly\activity\domain\Task.class
+com\progressly\activity\domain\TaskRepository.class

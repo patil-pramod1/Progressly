@@ -1,6 +1,6 @@
 # Docker and local services
 
-`docker-compose.yml` runs PostgreSQL 16, Redis 7, Kafka 3.8 in KRaft mode, and Mailpit. PostgreSQL, Redis, and Kafka have named volumes and health checks. The application itself runs from the host during development for fast feedback.
+`docker-compose.yml` runs PostgreSQL 16, Redis 7, Kafka 3.8 in KRaft mode, Mailpit, and Prometheus. PostgreSQL, Redis, Kafka, and Prometheus have named volumes or health checks. The application services run from the host during development for fast feedback.
 
 Docker Desktop is the default container runtime. Podman Desktop is also supported. When Podman is selected, `scripts/start-local.ps1` automatically runs `podman machine init` when the default machine does not exist, runs `podman machine start` when it is stopped, verifies `podman info`, and then starts Compose.
 

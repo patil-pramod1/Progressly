@@ -10,7 +10,7 @@ if (Test-Path $processFile) {
     foreach ($entry in @($processes)) {
         $process = Get-Process -Id $entry.pid -ErrorAction SilentlyContinue
         if ($process) {
-            Stop-Process -Id $entry.pid -Force
+            & taskkill.exe /PID $entry.pid /T /F 2>$null | Out-Null
             Write-Host "Stopped $($entry.name) (PID $($entry.pid))"
         }
     }

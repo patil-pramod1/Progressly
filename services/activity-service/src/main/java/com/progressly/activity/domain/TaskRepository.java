@@ -1,0 +1,1 @@
+package com.progressly.activity.domain; import java.util.*; import org.springframework.data.domain.*; import org.springframework.data.jpa.repository.JpaRepository; public interface TaskRepository extends JpaRepository<Task,UUID>{Page<Task> findByUserId(UUID u,Pageable p); Optional<Task> findByIdAndUserId(UUID id,UUID u);}
