@@ -53,7 +53,13 @@ if (-not (Get-Command "$containerCli-compose" -ErrorAction SilentlyContinue)) {
 if ($containerCli -eq 'podman') {
     Write-Host 'Checking Podman machine...' -ForegroundColor Cyan
     $machineName = 'podman-machine-default'
-    $machineState = (& podman machine inspect $machineName --format '{{.State}}' 2>$null | Select-Object -First 1)
+    $machineState = $null
+    try {
+        $machineState = (& podman machine inspect $machineName --format '{{.State}}' 2>$null | Select-Object -First 1)
+    } catch {
+        # A missing default machine is expected on first startup.
+        $machineState = $null
+    }
     if (-not $machineState) {
         Write-Host 'Initializing Podman machine. This downloads a one-time Linux VM image.' -ForegroundColor Yellow
         & podman machine init $machineName
