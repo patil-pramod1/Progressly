@@ -21,8 +21,11 @@ document.head.appendChild(semanticColorStyle);
 const pageStyle = document.createElement("style");
 pageStyle.textContent = `.tracker-shell{display:none}html[data-page=tracker] .dashboard-layout,html[data-page=settings] .dashboard-layout{display:none}html[data-page=tracker] .tracker-shell{display:block}html[data-page=tracker] #settings-page,html[data-page=home] #settings-page{display:none!important}html[data-page=settings] #settings-page{display:block!important}.task-delete{border:1px solid var(--token-border);background:transparent;color:var(--token-muted);border-radius:6px;padding:.15rem .4rem;font-size:.9rem}.task-delete:hover{color:#ef4444;border-color:#ef4444}.tracker-box:disabled{opacity:.38;cursor:not-allowed;transform:none!important;border-style:dashed}.tracker-box:disabled:hover{border-color:#455746;transform:none}`;
 document.head.appendChild(pageStyle);
+const layoutAuditStyle = document.createElement("style");
+layoutAuditStyle.textContent = `html,body,#root{min-height:100%;width:100%}#settings-root{width:100%;min-height:0}body{overflow-x:hidden;background:var(--token-bg);color:var(--token-text)}.dashboard-main{min-width:0}.dashboard-header{position:relative}.content-grid,.metrics{align-items:start}.panel{overflow:hidden}.tracker-shell{box-sizing:border-box}.settings-page{box-sizing:border-box}html[data-theme=light] .dashboard-layout,html[data-theme=light] .sidebar,html[data-theme=light] .panel,html[data-theme=light] .metric,html[data-theme=light] .tracker-card,html[data-theme=light] .settings-content{color:var(--token-text)}@media(max-width:1100px) and (min-width:761px){.dashboard-main{padding-left:2rem;padding-right:2rem}.profile-name{display:none}}@media(max-width:760px){.dashboard-header{padding-top:.5rem}.dashboard-header h1{padding-right:3rem}.welcome-banner{gap:1rem}.welcome-banner>div:first-child{min-width:0}.tracker-head{width:100%}.tracker-summary{flex-wrap:wrap}.settings-page-header{gap:1rem}.settings-page-header>div{min-width:0}}`;
+document.head.appendChild(layoutAuditStyle);
 const trackerPageStyle = document.createElement("style");
-trackerPageStyle.textContent = `.tracker-scroll{max-height:70vh;overflow:auto}.tracker-row.header{position:sticky;top:0;z-index:3;background:var(--token-surface)}.tracker-name{position:sticky;left:0;z-index:2;background:var(--token-surface)}.tracker-row.header .tracker-name{z-index:4}`;
+trackerPageStyle.textContent = `.tracker-scroll{max-height:none;overflow-x:auto;overflow-y:visible}.tracker-row.header{position:sticky;top:0;z-index:3;background:var(--token-surface)}.tracker-name{position:sticky;left:0;z-index:2;background:var(--token-surface)}.tracker-row.header .tracker-name{z-index:4}`;
 document.head.appendChild(trackerPageStyle);
 const navigationStyle = document.createElement("style");
 navigationStyle.textContent = `.back-button{display:none;position:fixed;z-index:9;top:1.25rem;left:260px;border:1px solid var(--token-border);background:var(--token-surface);color:var(--token-text);border-radius:9px;padding:.55rem .8rem;box-shadow:0 8px 20px #0002}.back-button:hover{color:var(--token-primary);border-color:var(--token-primary)}html[data-page=tracker] .back-button,html[data-page=settings] .back-button,html[data-page=goals] .back-button,html[data-page=tasks] .back-button,html[data-page=habits] .back-button{display:block}@media(max-width:760px){.back-button{left:1rem;top:1rem}}`;
@@ -33,11 +36,17 @@ document.head.appendChild(interactionStyle);
 const pageShellStyle = document.createElement("style");
 pageShellStyle.textContent = `html[data-page=tracker] .dashboard-layout,html[data-page=settings] .dashboard-layout{display:contents!important}html[data-page=tracker] .dashboard-main,html[data-page=settings] .dashboard-main{display:none!important}html[data-page=tracker] .sidebar,html[data-page=settings] .sidebar{position:fixed;left:0;top:0;width:235px;height:100vh;z-index:6}html[data-page=tracker] .tracker-shell,html[data-page=settings] #settings-page{margin-left:235px;min-height:100vh}@media(max-width:760px){html[data-page=tracker] .sidebar,html[data-page=settings] .sidebar{display:none!important}html[data-page=tracker] .tracker-shell,html[data-page=settings] #settings-page{margin-left:0}}`;
 document.head.appendChild(pageShellStyle);
+const mobileNavigationStyle = document.createElement("style");
+mobileNavigationStyle.textContent = `@media(max-width:760px){.sidebar{position:fixed!important;left:0;right:0;bottom:0;top:auto!important;width:100%!important;height:auto!important;display:flex!important;flex-direction:row!important;align-items:center;padding:.45rem .55rem!important;border-right:0!important;border-top:1px solid var(--token-border);background:var(--token-surface);z-index:20}.sidebar>.brand,.sidebar>.workspace-label,.sidebar>.sidebar-bottom{display:none!important}.sidebar>.side-nav{display:flex;flex:1;gap:.25rem;overflow-x:auto;scrollbar-width:none}.sidebar>.side-nav::-webkit-scrollbar{display:none}.sidebar>.side-nav button{width:auto;min-width:max-content;justify-content:center;padding:.6rem .7rem;font-size:.72rem;gap:.35rem}.sidebar>.side-nav button span{width:auto;font-size:.9rem}.sidebar>.side-nav button b{display:none}.dashboard-main{padding-bottom:5.5rem!important}html[data-page=tracker] .tracker-shell,html[data-page=settings] #settings-page{padding-bottom:5.5rem!important}}`;
+document.head.appendChild(mobileNavigationStyle);
+const interactionLayoutStyle = document.createElement("style");
+interactionLayoutStyle.textContent = `.habit-edit-form{display:flex;align-items:center;gap:.35rem;min-width:0;flex:1}.habit-edit-form input{min-width:0;flex:1;border:1px solid var(--token-border);background:var(--token-bg);color:var(--token-text);border-radius:7px;padding:.4rem .5rem;font-size:.75rem}.habit-edit,.habit-edit-cancel{border:1px solid var(--token-border);background:transparent;color:var(--token-muted);border-radius:7px;padding:.35rem .5rem;font-size:.68rem;white-space:nowrap}.habit-edit:hover,.habit-edit-cancel:hover{color:var(--token-primary);border-color:var(--token-primary)}.tracker-mode{display:flex;gap:.2rem;padding:.2rem;border:1px solid var(--token-border);border-radius:8px;background:var(--token-bg)}.tracker-mode button{border:0;background:transparent;color:var(--token-muted);border-radius:6px;padding:.3rem .5rem;font-size:.68rem}.tracker-mode button.selected{background:var(--token-primary-light);color:var(--token-primary);font-weight:800}@media(max-width:700px){.habit-edit-form{flex-wrap:wrap}.habit-edit-form input{flex-basis:100%}.tracker-mode{order:4}}`;
+interactionLayoutStyle.textContent += `.page-back{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--token-border);background:var(--token-surface);color:var(--token-muted);border-radius:8px;padding:.5rem .7rem;font-size:.75rem;box-shadow:0 5px 14px #0002}.page-back:hover{color:var(--token-primary);border-color:var(--token-primary)}.dashboard-main>.page-back{margin-bottom:1rem}.tracker-head{position:relative}.tracker-back{position:absolute;left:1.5rem;top:.85rem}.tracker-head>div:first-of-type{padding-top:1.2rem}.settings-page-close{width:auto;height:auto;padding:.5rem .7rem;font-size:.75rem}.item-edit,.item-delete,.item-save,.item-cancel{border:1px solid var(--token-border);background:transparent;color:var(--token-muted);border-radius:7px;padding:.32rem .48rem;font-size:.66rem;white-space:nowrap}.item-edit:hover,.item-save:hover{color:var(--token-primary);border-color:var(--token-primary)}.item-delete:hover{color:#ef4444;border-color:#ef4444}.item-edit-form{display:flex;align-items:center;gap:.4rem;width:100%}.item-edit-form input{min-width:0;flex:1;border:1px solid var(--token-border);background:var(--token-bg);color:var(--token-text);border-radius:7px;padding:.45rem .55rem;font-size:.75rem}.task-item .item-edit{margin-left:auto}@media(max-width:760px){.dashboard-main>.page-back{margin-bottom:.8rem}.tracker-back{left:.8rem;top:.65rem}.tracker-head>div:first-of-type{padding-top:2rem}.page-back{font-size:.7rem}.goal-title{flex-wrap:wrap}.goal-title>div{flex-basis:calc(100% - 1.5rem)}.item-edit-form{flex-wrap:wrap}.item-edit-form input{flex-basis:100%}}`;
+document.head.appendChild(interactionLayoutStyle);
 const sectionPageStyle = document.createElement("style");
 sectionPageStyle.textContent = `html[data-page=goals] .dashboard-main .welcome-banner,html[data-page=goals] .dashboard-main .metrics,html[data-page=goals] .dashboard-main .tasks-panel,html[data-page=goals] .dashboard-main .habits-panel,html[data-page=tasks] .dashboard-main .welcome-banner,html[data-page=tasks] .dashboard-main .metrics,html[data-page=tasks] .dashboard-main .goals-panel,html[data-page=tasks] .dashboard-main .habits-panel,html[data-page=habits] .dashboard-main .welcome-banner,html[data-page=habits] .dashboard-main .metrics,html[data-page=habits] .dashboard-main .goals-panel,html[data-page=habits] .dashboard-main .tasks-panel{display:none}html[data-page=goals] .dashboard-main .content-grid,html[data-page=tasks] .dashboard-main .content-grid,html[data-page=habits] .dashboard-main .content-grid{display:block}html[data-page=goals] .dashboard-main .goals-panel,html[data-page=tasks] .dashboard-main .tasks-panel,html[data-page=habits] .dashboard-main .habits-panel{display:block;max-width:900px;margin:auto}`;
 document.head.appendChild(sectionPageStyle);
 document.documentElement.dataset.page = "home";
-document.addEventListener("click", (event) => { const target = event.target as HTMLElement; if (target.closest(".sidebar-bottom button")?.textContent?.includes("Settings")) document.documentElement.dataset.page = "settings"; if (target.closest(".settings-page-close")) document.documentElement.dataset.page = "home"; });
 const paletteStyle = document.createElement("style");
 paletteStyle.textContent = `html[data-theme=light]{--token-primary:#16a34a;--token-primary-hover:#15803d;--token-primary-light:#dcfce7;--token-secondary:#14b8a6}html[data-theme=dark]{--token-primary:#4ade80;--token-primary-hover:#22c55e;--token-primary-light:#14532d;--token-secondary:#2dd4bf}html[data-theme=light][data-accent=blue]{--token-primary:#2563eb;--token-primary-hover:#1d4ed8;--token-primary-light:#dbeafe;--token-secondary:#3b82f6}html[data-theme=dark][data-accent=blue]{--token-primary:#60a5fa;--token-primary-hover:#3b82f6;--token-primary-light:#1e3a8a;--token-secondary:#38bdf8}html[data-theme=light][data-accent=purple]{--token-primary:#7c3aed;--token-primary-hover:#6d28d9;--token-primary-light:#ede9fe;--token-secondary:#a855f7}html[data-theme=dark][data-accent=purple]{--token-primary:#a78bfa;--token-primary-hover:#8b5cf6;--token-primary-light:#4c1d95;--token-secondary:#c084fc}html[data-theme=light][data-accent=orange]{--token-primary:#ea580c;--token-primary-hover:#c2410c;--token-primary-light:#ffedd5;--token-secondary:#f97316}html[data-theme=dark][data-accent=orange]{--token-primary:#fb923c;--token-primary-hover:#f97316;--token-primary-light:#7c2d12;--token-secondary:#fdba74}html[data-theme=light][data-accent=rose]{--token-primary:#e11d48;--token-primary-hover:#be123c;--token-primary-light:#ffe4e6;--token-secondary:#f43f5e}html[data-theme=dark][data-accent=rose]{--token-primary:#fb7185;--token-primary-hover:#f43f5e;--token-primary-light:#881337;--token-secondary:#fda4af}.primary,.add-button{background:var(--token-primary)!important}.primary:hover,.add-button:hover{background:var(--token-primary-hover)!important}.progress-track div,.tracker-box.checked,.goal-dot{background:var(--token-primary)!important}.side-nav button.active{background:var(--token-primary-light)!important;color:var(--token-primary)!important}.brand-mark{background:var(--token-primary)!important}.settings-launcher,.settings-panel{display:none!important}`;
 document.head.appendChild(paletteStyle);
@@ -47,47 +56,49 @@ document.head.appendChild(settingsStyle);
 const surfacePaletteStyle = document.createElement("style");
 surfacePaletteStyle.textContent = `.welcome-banner{background:linear-gradient(110deg,color-mix(in srgb,var(--token-primary) 18%,var(--token-surface)),var(--token-surface))!important}.story-copy em,.wave{color:var(--token-primary)!important}.metric-icon.lime{background:color-mix(in srgb,var(--token-primary) 18%,transparent);color:var(--token-primary)}.ring{background:conic-gradient(var(--token-primary) var(--progress),color-mix(in srgb,var(--token-primary) 20%,var(--token-surface)) 0)!important}.tracker-box.today{box-shadow:0 0 0 2px color-mix(in srgb,var(--token-primary) 30%,transparent)}html[data-theme=dark][data-accent=blue] .auth-story{background:radial-gradient(circle at 75% 35%,#1e3a8a 0,#172554 38%,#0f172a 75%)!important}html[data-theme=dark][data-accent=purple] .auth-story{background:radial-gradient(circle at 75% 35%,#4c1d95 0,#2e1065 38%,#0f172a 75%)!important}`;
 document.head.appendChild(surfacePaletteStyle);
-document.addEventListener("click", (event) => {
-  const target = event.target as HTMLElement;
-  if (
-    target.closest(".sidebar-bottom button")?.textContent?.includes("Settings")
-  ) {
-    const page = document.getElementById("settings-page");
-    page?.removeAttribute("hidden");
-    page?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-});
 
 const themeOverride = document.createElement("style");
 themeOverride.textContent = `html[data-theme=light] body,html[data-theme=light] .dashboard-layout,html[data-theme=light] .tracker-shell{background:#f8fafc;color:#0f172a}html[data-theme=light] .sidebar,html[data-theme=light] .panel,html[data-theme=light] .metric,html[data-theme=light] .tracker-card,html[data-theme=light] .welcome-banner{background:#fff;border-color:#e2e8f0}html[data-theme=light] .auth-page{background:#f8fafc;color:#0f172a}html[data-theme=light] .auth-card{background:#fff;border-color:#e2e8f0}html[data-theme=light] .auth-story{background:linear-gradient(135deg,#ecfdf5,#dcfce7)}html[data-theme=light] .eyebrow,html[data-theme=light] .goal-percent{color:var(--token-primary)}html[data-theme=light] .primary,html[data-theme=light] .add-button{background:var(--token-primary);color:#fff}html[data-theme=light] .ring{background:conic-gradient(var(--token-primary) var(--progress),#e2e8f0 0)}html[data-theme=light] .progress-track div,html[data-theme=light] .tracker-box.checked{background:var(--token-primary)}html[data-theme=light] .tracker-box.checked{color:#fff}html[data-theme=light] .auth-card input,html[data-theme=light] .inline-form input{background:#fff;color:#0f172a;border-color:#e2e8f0}html[data-theme=light] .muted,html[data-theme=light] .section-head span{color:#64748b}html[data-theme=light] .side-nav button,html[data-theme=light] .sidebar-bottom button{color:#64748b}html[data-theme=light] .side-nav button.active{background:#dcfce7;color:#166534}.settings-panel{position:relative;right:auto;bottom:auto;width:min(1000px,calc(100% - 3rem));margin:2rem auto;padding:1.5rem}`;
 document.head.appendChild(themeOverride);
-document.addEventListener("click", (event) => {
-  const target = event.target as HTMLElement;
-  if (
-    target.closest(".sidebar-bottom button") &&
-    target.textContent?.includes("Settings")
-  ) {
-    window.setTimeout(() => {
-      document.querySelector<HTMLButtonElement>(".settings-launcher")?.click();
-      document
-        .querySelector(".settings-panel")
-        ?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 0);
-  }
-});
 
 const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1";
 type User = { id: string; email: string; displayName: string; role: string };
 type Goal = {
   id: string;
   title: string;
+  description?: string;
+  category?: string;
   status: string;
   currentValue: number;
   targetValue?: number;
   trackingType: string;
+  startDate?: string;
+  targetDate?: string;
+  priority?: string;
 };
-type Task = { id: string; title: string; status: string; priority?: string };
-type Habit = { id: string; name: string; frequency: string; active: boolean };
+type Task = {
+  id: string;
+  title: string;
+  description?: string;
+  status: string;
+  priority?: string;
+  category?: string;
+  recurrence?: string;
+  dueDate?: string;
+  dueTime?: string;
+  estimatedMinutes?: number;
+  actualMinutes?: number;
+  goalId?: string;
+  milestoneId?: string;
+};
+type Habit = {
+  id: string;
+  name: string;
+  description?: string;
+  frequency: string;
+  targetValue?: number;
+  active: boolean;
+};
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem("progressly.accessToken");
   const response = await fetch(`${API}${path}`, {
@@ -248,6 +259,10 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
   const [goalTitle, setGoalTitle] = useState("");
   const [taskTitle, setTaskTitle] = useState("");
   const [habitName, setHabitName] = useState("");
+  const [editingHabitId, setEditingHabitId] = useState<string | null>(null);
+  const [editingHabitName, setEditingHabitName] = useState("");
+  const [editingGoalId, setEditingGoalId] = useState<string | null>(null);
+  const [editingGoalTitle, setEditingGoalTitle] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [activeView, setActiveView] = useState("Overview");
@@ -278,6 +293,11 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
   }
   function navigate(label: string) {
     setActiveView(label);
+    if (label === "Settings") {
+      document.documentElement.dataset.page = "settings";
+      document.getElementById("settings-page")?.removeAttribute("hidden");
+      return;
+    }
     if (label === "Monthly tracker") {
       document.documentElement.dataset.page = "tracker";
       return;
@@ -324,6 +344,66 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
     setHabitName("");
     load();
   }
+  function startEditingGoal(goal: Goal) {
+    setEditingGoalId(goal.id);
+    setEditingGoalTitle(goal.title);
+  }
+  function cancelEditingItem() {
+    setEditingGoalId(null);
+    setEditingGoalTitle("");
+  }
+  async function saveGoal(goal: Goal) {
+    const title = editingGoalTitle.trim();
+    if (!title) return;
+    await request(`/goals/${goal.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        title,
+        description: goal.description ?? null,
+        category: goal.category ?? null,
+        trackingType: goal.trackingType,
+        targetValue: goal.targetValue ?? null,
+        startDate: goal.startDate ?? null,
+        targetDate: goal.targetDate ?? null,
+        priority: goal.priority ?? null,
+        status: goal.status,
+      }),
+    });
+    cancelEditingItem();
+    load();
+  }
+  async function deleteGoal(id: string) {
+    if (!window.confirm("Delete this goal?")) return;
+    await request(`/goals/${id}`, { method: "DELETE" });
+    load();
+  }
+  function startEditingHabit(habit: Habit) {
+    setEditingHabitId(habit.id);
+    setEditingHabitName(habit.name);
+  }
+  function cancelEditingHabit() {
+    setEditingHabitId(null);
+    setEditingHabitName("");
+  }
+  async function saveHabit(habit: Habit) {
+    const name = editingHabitName.trim();
+    if (!name) return;
+    try {
+      await request(`/habits/${habit.id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          name,
+          description: habit.description ?? null,
+          frequency: habit.frequency,
+          targetValue: habit.targetValue ?? null,
+        }),
+      });
+      cancelEditingHabit();
+      load();
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  }
   async function completeTask(id: string) {
     await request(`/tasks/${id}/status`, {
       method: "PATCH",
@@ -334,6 +414,33 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
   async function deleteTask(id: string) {
     if (!window.confirm("Delete this task?")) return;
     await request(`/tasks/${id}`, { method: "DELETE" });
+    load();
+  }
+  async function editTask(task: Task) {
+    const title = window.prompt("Edit task", task.title)?.trim();
+    if (!title || title === task.title) return;
+    await request(`/tasks/${task.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        title,
+        description: task.description ?? null,
+        category: task.category ?? null,
+        priority: task.priority ?? null,
+        dueDate: task.dueDate ?? null,
+        dueTime: task.dueTime ?? null,
+        estimatedMinutes: task.estimatedMinutes ?? null,
+        actualMinutes: task.actualMinutes ?? null,
+        goalId: task.goalId ?? null,
+        milestoneId: task.milestoneId ?? null,
+        recurrence: task.recurrence ?? "NONE",
+        status: task.status,
+      }),
+    });
+    load();
+  }
+  async function deleteHabit(id: string) {
+    if (!window.confirm("Delete this habit?")) return;
+    await request(`/habits/${id}`, { method: "DELETE" });
     load();
   }
   async function logHabit(id: string) {
@@ -390,11 +497,7 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
         </nav>
         <div className="sidebar-bottom">
           <button
-            onClick={() =>
-              notify(
-                "Settings will be available with your profile preferences.",
-              )
-            }
+            onClick={() => navigate("Settings")}
           >
             <span>⚙</span>Settings
           </button>
@@ -404,6 +507,16 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
         </div>
       </aside>
       <section className="dashboard-main">
+        {activeView !== "Overview" && (
+          <button
+            className="page-back"
+            type="button"
+            onClick={() => navigate("Overview")}
+            aria-label="Back to overview"
+          >
+            ← Back to overview
+          </button>
+        )}
         <header className="dashboard-header">
           <div className="mobile-brand">
             <Brand />
@@ -539,19 +652,40 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
                     : 0;
                 return (
                   <article className="goal-item" key={goal.id}>
-                    <div className="goal-title">
-                      <span className="goal-dot" />
-                      <div>
-                        <strong>{goal.title}</strong>
-                        <small>
-                          {goal.status.replace("_", " ").toLowerCase()}
-                        </small>
-                      </div>
-                      <span className="goal-percent">{progress}%</span>
-                    </div>
-                    <div className="progress-track">
-                      <div style={{ width: `${progress}%` }} />
-                    </div>
+                    {editingGoalId === goal.id ? (
+                      <form
+                        className="item-edit-form"
+                        onSubmit={(event) => {
+                          event.preventDefault();
+                          saveGoal(goal);
+                        }}
+                      >
+                        <input
+                          aria-label={`Edit ${goal.title}`}
+                          value={editingGoalTitle}
+                          onChange={(event) => setEditingGoalTitle(event.target.value)}
+                          autoFocus
+                        />
+                        <button className="item-save" type="submit">Save</button>
+                        <button className="item-cancel" type="button" onClick={cancelEditingItem}>Cancel</button>
+                      </form>
+                    ) : (
+                      <>
+                        <div className="goal-title">
+                          <span className="goal-dot" />
+                          <div>
+                            <strong>{goal.title}</strong>
+                            <small>{goal.status.replace("_", " ").toLowerCase()}</small>
+                          </div>
+                          <span className="goal-percent">{progress}%</span>
+                          <button className="item-edit" type="button" onClick={() => startEditingGoal(goal)} aria-label={`Edit ${goal.title}`}>Edit</button>
+                          <button className="item-delete" type="button" onClick={() => deleteGoal(goal.id)} aria-label={`Delete ${goal.title}`}>Delete</button>
+                        </div>
+                        <div className="progress-track">
+                          <div style={{ width: `${progress}%` }} />
+                        </div>
+                      </>
+                    )}
                   </article>
                 );
               })
@@ -601,6 +735,7 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
                   >
                     {task.status === "COMPLETED" ? "✓" : ""}
                   </button>
+                  <button className="item-edit" type="button" onClick={() => editTask(task)} aria-label={`Edit ${task.title}`}>Edit</button>
                   <div>
                     <strong>{task.title}</strong>
                     <small>
@@ -645,16 +780,56 @@ function Dashboard({ user, onLogout }: { user: User; onLogout: () => void }) {
               habits.slice(0, 6).map((habit) => (
                 <article className="habit-item" key={habit.id}>
                   <span className="habit-icon">✦</span>
-                  <div>
-                    <strong>{habit.name}</strong>
-                    <small>{habit.frequency.toLowerCase()} routine</small>
-                  </div>
-                  <button
-                    className="habit-done"
-                    onClick={() => logHabit(habit.id)}
-                  >
-                    Done
-                  </button>
+                  {editingHabitId === habit.id ? (
+                    <form
+                      className="habit-edit-form"
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        saveHabit(habit);
+                      }}
+                    >
+                      <input
+                        aria-label={`Edit ${habit.name}`}
+                        value={editingHabitName}
+                        onChange={(event) => setEditingHabitName(event.target.value)}
+                        autoFocus
+                      />
+                      <button className="habit-done" type="submit">Save</button>
+                      <button className="habit-edit-cancel" type="button" onClick={cancelEditingHabit}>
+                        Cancel
+                      </button>
+                    </form>
+                  ) : (
+                    <>
+                      <div>
+                        <strong>{habit.name}</strong>
+                        <small>{habit.frequency.toLowerCase()} routine</small>
+                      </div>
+                      <button
+                        className="habit-edit"
+                        type="button"
+                        onClick={() => startEditingHabit(habit)}
+                        aria-label={`Edit ${habit.name}`}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="habit-done"
+                        type="button"
+                        onClick={() => logHabit(habit.id)}
+                      >
+                        Done
+                      </button>
+                      <button
+                        className="item-delete"
+                        type="button"
+                        onClick={() => deleteHabit(habit.id)}
+                        aria-label={`Delete ${habit.name}`}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </article>
               ))
             )}
@@ -690,7 +865,6 @@ export function App() {
         JSON.stringify(defaultPreferences),
     ),
   );
-  const [settingsOpen, setSettingsOpen] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("progressly.accessToken");
     if (token)
@@ -723,9 +897,6 @@ export function App() {
     query.addEventListener?.("change", update);
     return () => query.removeEventListener?.("change", update);
   }, [preferences.theme]);
-  function updatePreferences(next: Partial<Preferences>) {
-    setPreferences((current) => ({ ...current, ...next }));
-  }
   return (
     <>
       <style>{uiStyles + trackerStyles + designStyles}</style>
@@ -741,34 +912,39 @@ export function App() {
             }}
           />
           <MonthlyTracker />
-          <PersonalizationPanel
-            open={settingsOpen}
-            onClose={() => setSettingsOpen(false)}
-            preferences={preferences}
-            update={updatePreferences}
-          />
-          <BackButton />
         </>
       )}
     </>
   );
 }
-function BackButton() { return <button className="back-button" onClick={() => Array.from(document.querySelectorAll<HTMLButtonElement>('.side-nav button')).find(button => button.textContent?.includes('Overview'))?.click()} aria-label="Back to home">← Back</button>; }
 function MonthlyTracker() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [logs, setLogs] = useState<
     Record<string, { date: string; completed: boolean }[]>
   >({});
-  const [month, setMonth] = useState(new Date());
+  const [periodDate, setPeriodDate] = useState(new Date());
+  const [viewMode, setViewMode] = useState<"monthly" | "weekly">("monthly");
   const [error, setError] = useState("");
-  const year = month.getFullYear();
-  const monthIndex = month.getMonth();
-  const days = new Date(year, monthIndex + 1, 0).getDate();
-  const dates = useMemo(
-    () =>
-      Array.from({ length: days }, (_, i) => new Date(year, monthIndex, i + 1)),
-    [year, monthIndex, days],
-  );
+  const year = periodDate.getFullYear();
+  const monthIndex = periodDate.getMonth();
+  const weekStart = useMemo(() => {
+    const start = new Date(periodDate);
+    start.setHours(0, 0, 0, 0);
+    const day = start.getDay();
+    start.setDate(start.getDate() - (day === 0 ? 6 : day - 1));
+    return start;
+  }, [periodDate]);
+  const days = viewMode === "monthly" ? new Date(year, monthIndex + 1, 0).getDate() : 7;
+  const dates = useMemo(() => {
+    if (viewMode === "weekly") {
+      return Array.from({ length: 7 }, (_, i) => {
+        const date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + i);
+        return date;
+      });
+    }
+    return Array.from({ length: days }, (_, i) => new Date(year, monthIndex, i + 1));
+  }, [days, monthIndex, viewMode, weekStart, year]);
   async function load() {
     try {
       const hs = await request<Habit[]>("/habits");
@@ -791,18 +967,22 @@ function MonthlyTracker() {
   }
   useEffect(() => {
     load();
-  }, [year, monthIndex]);
+  }, [year, monthIndex, viewMode, weekStart]);
   function dateKey(date: Date) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`; }
   async function toggle(habit: Habit, date: Date) {
     if (date.toDateString() !== new Date().toDateString()) return;
     const key = dateKey(date);
     const current =
       logs[habit.id]?.find((l) => l.date === key)?.completed === true;
-    await request(`/habits/${habit.id}/logs`, {
-      method: "POST",
-      body: JSON.stringify({ completed: !current, date: key }),
-    });
-    load();
+    try {
+      await request(`/habits/${habit.id}/logs`, {
+        method: "POST",
+        body: JSON.stringify({ completed: !current, date: key }),
+      });
+      await load();
+    } catch (e) {
+      setError((e as Error).message);
+    }
   }
   const checked = (habit: Habit, date: Date) =>
     logs[habit.id]?.some(
@@ -818,32 +998,53 @@ function MonthlyTracker() {
     <section className="tracker-shell">
       <div className="tracker-card">
         <header className="tracker-head">
+          <button
+            className="page-back tracker-back"
+            type="button"
+            onClick={() => { document.documentElement.dataset.page = "home"; }}
+            aria-label="Back to overview"
+          >
+            ← Back to overview
+          </button>
           <div>
             <p className="eyebrow">CONSISTENCY AT A GLANCE</p>
-            <h2>Monthly progress tracker</h2>
-            <p>Click any square to mark a habit complete for that day.</p>
+            <h2>{viewMode === "monthly" ? "Monthly progress tracker" : "Weekly progress tracker"}</h2>
+            <p>Only today can be edited; earlier and future dates are locked.</p>
           </div>
           <div className="tracker-summary">
             <span>
-              {month.toLocaleDateString(undefined, {
-                month: "long",
-                year: "numeric",
-              })}
+              {viewMode === "monthly"
+                ? periodDate.toLocaleDateString(undefined, { month: "long", year: "numeric" })
+                : `${weekStart.toLocaleDateString(undefined, { month: "short", day: "numeric" })} – ${dates[6].toLocaleDateString(undefined, { month: "short", day: "numeric" })}`}
             </span>
+            <div className="tracker-mode" role="group" aria-label="Tracker view">
+              <button className={viewMode === "monthly" ? "selected" : ""} onClick={() => setViewMode("monthly")}>Month</button>
+              <button className={viewMode === "weekly" ? "selected" : ""} onClick={() => setViewMode("weekly")}>Week</button>
+            </div>
             <span>
               Overall <strong>{overall}%</strong>
             </span>
             <button
               className="icon-button"
-              onClick={() => setMonth(new Date(year, monthIndex - 1, 1))}
-              aria-label="Previous month"
+              onClick={() => {
+                const next = new Date(periodDate);
+                if (viewMode === "monthly") next.setMonth(next.getMonth() - 1, 1);
+                else next.setDate(next.getDate() - 7);
+                setPeriodDate(next);
+              }}
+              aria-label={viewMode === "monthly" ? "Previous month" : "Previous week"}
             >
               ‹
             </button>
             <button
               className="icon-button"
-              onClick={() => setMonth(new Date(year, monthIndex + 1, 1))}
-              aria-label="Next month"
+              onClick={() => {
+                const next = new Date(periodDate);
+                if (viewMode === "monthly") next.setMonth(next.getMonth() + 1, 1);
+                else next.setDate(next.getDate() + 7);
+                setPeriodDate(next);
+              }}
+              aria-label={viewMode === "monthly" ? "Next month" : "Next week"}
             >
               ›
             </button>
@@ -859,7 +1060,9 @@ function MonthlyTracker() {
               <strong className="tracker-name">Activity</strong>
               {dates.map((d) => (
                 <span className="tracker-day" key={d.toISOString()}>
-                  {d.getDate()}
+                  {viewMode === "weekly"
+                    ? d.toLocaleDateString(undefined, { weekday: "short" }).slice(0, 2)
+                    : d.getDate()}
                 </span>
               ))}
             </div>
@@ -896,7 +1099,7 @@ function MonthlyTracker() {
         </div>
         <footer className="tracker-footer">
           {habits.length
-            ? `${totalChecks} of ${totalPossible} habit checks completed this month.`
+            ? `${totalChecks} of ${totalPossible} habit checks completed this ${viewMode === "monthly" ? "month" : "week"}.`
             : "Create habits above to start building your monthly grid."}
         </footer>
       </div>
@@ -1058,14 +1261,14 @@ function SettingsPage() {
             <p>Personalize your workspace and control how Progressly feels.</p>
           </div>
           <button
-            className="settings-page-close"
-            onClick={() =>
-              document
-                .getElementById("settings-page")
-                ?.setAttribute("hidden", "")
-            }
+            className="page-back settings-page-close"
+            aria-label="Back to overview"
+            onClick={() => {
+              document.getElementById("settings-page")?.setAttribute("hidden", "");
+              document.documentElement.dataset.page = "home";
+            }}
           >
-            ×
+            ← Back
           </button>
         </div>
         <div className="settings-tabs" role="tablist">
